@@ -1,0 +1,25 @@
+---
+version: '3'
+services:
+  sysdig:
+    image: sysdig/sysdig:latest
+    restart: 'no'
+    privileged: true
+    command:
+    - bash
+    - -c
+    - |
+      echo 'Starting bash...'
+      tail -f /dev/null
+    volumes:
+    - /opt/sysdig/captures:/captures
+    - /var/run/docker.sock:/host/var/run/docker.sock
+    # CRI
+    #- /run/containerd/containerd.sock:/host/run/containerd/containerd.sock
+    # MicroK8s
+    #- /var/snap/microk8s/common/run/containerd.sock:/host/run/containerd/containerd.sock
+    - /dev:/host/dev
+    - /proc:/host/proc:ro
+    - /boot:/host/boot:ro
+    - /lib/modules:/host/lib/modules:ro
+    - /usr:/host/usr:ro
